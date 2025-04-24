@@ -18,7 +18,6 @@ vector<int> pipes(2);
 vector<int> state_portal(2);
 
 int space[10] = {20, 17, 20, 20, 23, 19, 20, 20, 19, 20};
-bool menu = false, pause = false, play = true;
 
 void initialize() {
     srand(time(0));

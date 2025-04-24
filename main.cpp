@@ -6,6 +6,7 @@
 #include "game.h"
 
 using namespace std;
+bool menu = false, pause = false, play = true;
 
 int main(int argc, char *argv[]) {
     srand(time(0));
