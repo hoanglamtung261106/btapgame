@@ -11,8 +11,10 @@ SDL_Texture* score;
 SDL_Texture* digit[10];
 SDL_Texture* pipe1;
 SDL_Texture* pipe2;
-
+SDL_Texture* button;
 SDL_Texture* portal[5];
+
+bool menu = true, pause = false, play = false;
 
 vector<int> pipes(2);
 vector<int> state_portal(2);
@@ -42,6 +44,8 @@ void initialize() {
     bird4[1] = graphics.loadTexture("frame4-2.png");
     bird4[2] = graphics.loadTexture("frame4-3.png");
     bird4[3] = graphics.loadTexture("frame4-4.png");
+
+    button = graphics.loadTexture("button.png");
 
     score = graphics.loadTexture(SCORE_FONT);
     background = graphics.loadTexture(BACKGROUND);

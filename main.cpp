@@ -6,7 +6,6 @@
 #include "game.h"
 
 using namespace std;
-bool menu = false, pause = false, play = true;
 
 int main(int argc, char *argv[]) {
     srand(time(0));
@@ -29,7 +28,6 @@ int main(int argc, char *argv[]) {
             update(graphics, clip, upside_down, mini, x, y, xx);
             gen_pipe(xx);
             present_score(point, xx);
-            SDL_PollEvent(&e);
         }
 
         else if (pause) {
@@ -37,9 +35,11 @@ int main(int argc, char *argv[]) {
         }
 
         else if (menu) {
-
+            graphics.renderTexture(background, 0, 0);
+            graphics.renderTexture(button, 264, 100);
         }
 
+        SDL_PollEvent(&e);
         graphics.presentScene();
         SDL_Delay(15);
 
