@@ -14,6 +14,14 @@ vector<int> conv(int point) {
     return vec;
 }
 
+void start_to_game(int& y, bool& upside_down, bool& mini, int& clip, int& pipe_x, int& point) {
+    y = 150;
+    upside_down = mini = false;
+    for (int i = 0; i < 2; i++) pipes[i] = rand() % (SCREEN_HEIGHT - 200) + 200;
+    for (int i = 0; i < 2; i++) state_portal[i] = rand() % 5;
+    pipe_x = 1200;
+    point = 0;
+}
 void update(Graphics& graphics, int& clip, bool& upside_down, bool& mini, int& x, int& y, int& pipe_x) {
     const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 
@@ -93,8 +101,9 @@ void update(Graphics& graphics, int& clip, bool& upside_down, bool& mini, int& x
     clip = (clip + 1) % 4; //Update 1 đoạn mới cho 2 loại chim (14 đoạn tất cả)
 
     //Phần code khi chim chạm vào cột
-    if (!mini && pipe_x - 600 == 150 + 90 && (y + 80 > pipes[0] || y < pipes[0] - 200)) play = false;
-    else if (mini && pipe_x - 600 == 150 + 45 && (y + 40 > pipes[0] || y < pipes[0] - 200)) play = false;
+    if (currentKeyStates[SDL_SCANCODE_SPACE]) play = false, pause = true;
+    if (!mini && pipe_x - 600 == 150 + 90 && (y + 80 > pipes[0] || y < pipes[0] - 200)) play = false, menu = true;
+    else if (mini && pipe_x - 600 == 150 + 45 && (y + 40 > pipes[0] || y < pipes[0] - 200)) play = false, menu = true;
 }
 
 void gen_pipe(int& xx) {

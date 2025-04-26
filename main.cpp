@@ -31,12 +31,23 @@ int main(int argc, char *argv[]) {
         }
 
         else if (pause) {
-
+            graphics.renderTexture(background, 0, 0);
+            graphics.renderTexture(button, 264, 300);
+            int mx, my;
+            SDL_GetMouseState(&mx, &my);
+            if (mx >= 264 && mx <= 264 + 241 && my >= 300 && my <= 400 && SDL_MOUSEBUTTONDOWN == e.type) {
+                pause = false, play = true;
+            }
         }
 
         else if (menu) {
             graphics.renderTexture(background, 0, 0);
-            graphics.renderTexture(button, 264, 100);
+            graphics.renderTexture(button, 264, 300);
+            int mx, my;
+            SDL_GetMouseState(&mx, &my);
+            if (mx >= 264 && mx <= 264 + 241 && my >= 300 && my <= 400 && SDL_MOUSEBUTTONDOWN == e.type) {
+                start_to_game(y, upside_down, mini, clip, xx, point), menu = false, play = true;
+            }
         }
 
         SDL_PollEvent(&e);
