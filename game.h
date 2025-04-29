@@ -66,36 +66,36 @@ void update(Graphics& graphics, int& clip, bool& upside_down, bool& mini, int& x
 
     else if (!upside_down && mini) /*Xuôi và nhỏ*/ {
         if (currentKeyStates[SDL_SCANCODE_UP] && y >= 20) {
-            if (pipe_x - 600 < x + 45 && pipe_x - 600 + 100 > x) {
+            if (pipe_x - 600 < x + 22 + 45 && pipe_x - 600 + 100 > x + 22) {
                 if (y > pipes[0] - 200) y -= 20;
             }
             else y -= 20;
         }
         else if (currentKeyStates[SDL_SCANCODE_UP]);
         else if (y <= SCREEN_HEIGHT - 60) {
-            if (pipe_x - 600 < x + 45 && pipe_x - 600 + 100 > x) {
+            if (pipe_x - 600 < x + 22 + 45 && pipe_x - 600 + 100 > x + 22) {
                 if (y + 40 < pipes[0]) y += 20;
             }
             else y += 20;
         }
-        graphics.renderTexture(bird3[clip], x, y);
+        graphics.renderTexture(bird3[clip], x + 22, y);
     }
 
     else if (upside_down && mini) /*Ngược và nhỏ*/ {
         if (currentKeyStates[SDL_SCANCODE_UP] && y <= SCREEN_HEIGHT - 60) {
-            if (pipe_x - 600 < x + 45 && pipe_x - 600 + 100 > x) {
+            if (pipe_x - 600 < x + 22 + 45 && pipe_x - 600 + 100 > x + 22) {
                 if (y + 40 < pipes[0]) y += 20;
             }
             else y += 20;
         }
         else if (currentKeyStates[SDL_SCANCODE_UP]);
         else if (y >= 20) {
-            if (pipe_x - 600 < x + 45 && pipe_x - 600 + 100 > x) {
+            if (pipe_x - 600 < x + 22 + 45 && pipe_x - 600 + 100 > x + 22) {
                 if (y > pipes[0] - 200) y -= 20;
             }
             else y -= 20;
         }
-        graphics.renderTexture(bird4[clip], x, y);
+        graphics.renderTexture(bird4[clip], x + 22, y);
     }
 
     clip = (clip + 1) % 4; //Update 1 đoạn mới cho 2 loại chim (14 đoạn tất cả)
