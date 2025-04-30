@@ -14,7 +14,7 @@ vector<int> conv(int point) {
     return vec;
 }
 
-void start_to_game(int& y, bool& upside_down, bool& mini, int& clip, int& pipe_x, int& point) {
+void start_to_game() {
     y = 150;
     upside_down = mini = false;
     for (int i = 0; i < 2; i++) pipes[i] = rand() % (SCREEN_HEIGHT - 200) + 200;
@@ -22,7 +22,8 @@ void start_to_game(int& y, bool& upside_down, bool& mini, int& clip, int& pipe_x
     pipe_x = 1200;
     point = 0;
 }
-void update(Graphics& graphics, int& clip, bool& upside_down, bool& mini, int& x, int& y, int& pipe_x) {
+
+void update() {
     const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 
     if (pipe_x == 800 && state_portal[0] == 0) upside_down ^= 1;
@@ -32,10 +33,12 @@ void update(Graphics& graphics, int& clip, bool& upside_down, bool& mini, int& x
         mini = true;
         if (!upside_down) {
             y += 10;
+            if (pipe_x - 600 < x + 90 && pipe_x - 600 + 100 > x && y + 40 > pipes[0]) y -= 10;
             if (y % 20 != 0) y += 10;
         }
         else {
             y -= 10;
+            if (pipe_x - 600 < x + 90 && pipe_x - 600 + 100 > x && y < pipes[0] - 200) y -= 10;
             if (y % 20 != 0) y -= 10;
         }
     }
@@ -135,25 +138,25 @@ void update(Graphics& graphics, int& clip, bool& upside_down, bool& mini, int& x
     else if (mini && pipe_x - 600 == 150 + 45 && (y + 40 > pipes[0] || y < pipes[0] - 200)) play = false, menu = true;
 }
 
-void gen_pipe(int& xx) {
+void gen_pipe() {
     for (int i = 0; i <= 1; i++) {
-        graphics.renderTexture(pipe1, xx - 600 * (1 - i), pipes[i]);
-        graphics.renderTexture(pipe2, xx - 600 * (1 - i), pipes[i] - 600);
-        graphics.renderTexture(portal[state_portal[i]], xx - 600 * (1 - i), pipes[i] - 195);
+        graphics.renderTexture(pipe1, pipe_x - 600 * (1 - i), pipes[i]);
+        graphics.renderTexture(pipe2, pipe_x - 600 * (1 - i), pipes[i] - 600);
+        graphics.renderTexture(portal[state_portal[i]], pipe_x - 600 * (1 - i), pipes[i] - 195);
     }
-    xx -= 5;
+    pipe_x -= 5;
 
-    if (xx - 500 < 0) {
+    if (pipe_x - 500 < 0) {
         pipes.erase(pipes.begin());
         pipes.push_back(rand() % (SCREEN_HEIGHT - 200) / 40 * 40 + 200);
 
         state_portal.erase(state_portal.begin());
         state_portal.push_back(rand() % 10);
-        xx += 600;
+        pipe_x += 600;
     }
 }
 
-void present_score(int& point, int& pipe_x) {
+void present_score() {
     graphics.renderTexture(score, 0, 0);
     vector<int> vpoint = conv(point);
     int d = 115;
@@ -161,7 +164,22 @@ void present_score(int& point, int& pipe_x) {
     if (pipe_x - 600 == 150) point++;
 }
 
-void update(Graphics& graphics) {
-
+void present_menu() {
+    graphics.renderTexture(background, 0, 0);
+    graphics.renderTexture(button, 264, 230);
+    graphics.renderTexture(button, 264, 300);
+    graphics.renderTexture(button, 264, 370);
+    graphics.renderTexture(font_play, 335, 266);
+    graphics.renderTexture(font_quit, 340, 406);
+    graphics.renderTexture(name, 25, 30);
+    int mx, my;
+    SDL_GetMouseState(&mx, &my);
+    if (mx >= 290 && mx <= 480 && my >= 256 && my <= 306 && SDL_MOUSEBUTTONDOWN == e.type) {
+        start_to_game(), menu = false, play = true;
+    }
+    else if (mx >= 290 && mx <= 480 && my >= 256 + 140 && my <= 306 + 140 && SDL_MOUSEBUTTONDOWN == e.type) {
+        quit = true;
+    }
 }
+
 #endif // GAME_H
