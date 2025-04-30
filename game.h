@@ -25,10 +25,39 @@ void start_to_game(int& y, bool& upside_down, bool& mini, int& clip, int& pipe_x
 void update(Graphics& graphics, int& clip, bool& upside_down, bool& mini, int& x, int& y, int& pipe_x) {
     const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 
-    if (pipe_x == 800 && state_portal[0] == 1) upside_down = true;
-    if (pipe_x == 800 && state_portal[0] == 2) upside_down = false;
-    if (pipe_x == 800 && state_portal[0] == 3) mini = true;
-    if (pipe_x == 800 && state_portal[0] == 4) mini = false;
+    if (pipe_x == 800 && state_portal[0] == 0) upside_down ^= 1;
+    else if (pipe_x == 800 && state_portal[0] == 1) upside_down = true;
+    else if (pipe_x == 800 && state_portal[0] == 2) upside_down = false;
+    else if (pipe_x == 800 && state_portal[0] == 3) {
+        mini = true;
+        if (!upside_down) {
+            y += 10;
+            if (y % 20 != 0) y += 10;
+        }
+        else {
+            y -= 10;
+            if (y % 20 != 0) y -= 10;
+        }
+    }
+    else if (pipe_x == 800 && state_portal[0] == 4) {
+        mini = false;
+        if (!upside_down) {
+            if (pipe_x - 600 < x + 90 && pipe_x - 600 + 100 > x) {
+                if (y == pipes[0] - 200);
+                else if (y + 40 == pipes[0]) y -= 20;
+                else y -= 10;
+            }
+            else y -= 10;
+        }
+        else {
+            if (pipe_x - 600 < x + 90 && pipe_x - 600 + 100 > x) {
+                if (y == pipes[0] - 200) y += 20;
+                else if (y + 40 == pipes[0]);
+                else y += 10;
+            }
+            else y += 10;
+        }
+    }
 
     if (!upside_down && !mini) /*Xuôi và to*/ {
         if (currentKeyStates[SDL_SCANCODE_UP] && y >= 10) {
@@ -110,7 +139,7 @@ void gen_pipe(int& xx) {
     for (int i = 0; i <= 1; i++) {
         graphics.renderTexture(pipe1, xx - 600 * (1 - i), pipes[i]);
         graphics.renderTexture(pipe2, xx - 600 * (1 - i), pipes[i] - 600);
-        if (state_portal[i] > 0) graphics.renderTexture(portal[state_portal[i]], xx - 600 * (1 - i), pipes[i] - 195);
+        graphics.renderTexture(portal[state_portal[i]], xx - 600 * (1 - i), pipes[i] - 195);
     }
     xx -= 5;
 
@@ -119,7 +148,7 @@ void gen_pipe(int& xx) {
         pipes.push_back(rand() % (SCREEN_HEIGHT - 200) / 40 * 40 + 200);
 
         state_portal.erase(state_portal.begin());
-        state_portal.push_back(rand() % 5);
+        state_portal.push_back(rand() % 10);
         xx += 600;
     }
 }

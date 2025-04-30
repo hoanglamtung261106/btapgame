@@ -12,7 +12,7 @@ SDL_Texture* digit[10];
 SDL_Texture* pipe1;
 SDL_Texture* pipe2;
 SDL_Texture* button;
-SDL_Texture* portal[5];
+SDL_Texture* portal[10];
 
 bool menu = true, pause = false, play = false;
 
@@ -56,8 +56,9 @@ void initialize() {
     for (int i = 0; i < 10; i++) digit[i] = graphics.loadTexture(DIGIT[i]);
 
     for (int i = 0; i < 2; i++) pipes[i] = rand() % (SCREEN_HEIGHT - 200) + 200;
-    for (int i = 0; i < 2; i++) state_portal[i] = rand() % 5;
+    for (int i = 0; i < 2; i++) state_portal[i] = rand() % 10;
 
+    portal[0] = graphics.loadTexture("down_or_up_portal.png");
     portal[1] = graphics.loadTexture("up_portal.png");
     portal[2] = graphics.loadTexture("down_portal.png");
     portal[3] = graphics.loadTexture("mini_portal.png");
