@@ -132,8 +132,9 @@ void update() {
 
     clip = (clip + 1) % 4; //Update 1 đoạn mới cho 2 loại chim (14 đoạn tất cả)
 
-    //Phần code khi chim chạm vào cột
-    if (currentKeyStates[SDL_SCANCODE_SPACE]) play = false, pause = true;
+    int mx, my; SDL_GetMouseState(&mx, &my);
+    if (currentKeyStates[SDL_SCANCODE_ESCAPE]) play = false, pause = true;
+    else if ((mx - SCREEN_WIDTH + 10) * (mx - SCREEN_WIDTH + 10) + (my - 10) * (my - 10) <= 100 && SDL_MOUSEBUTTONDOWN == e.type) play = false, pause = true;
     if (!mini && pipe_x - 600 == 150 + 90 && (y + 80 > pipes[0] || y < pipes[0] - 200)) play = false, menu = true;
     else if (mini && pipe_x - 600 == 150 + 45 && (y + 40 > pipes[0] || y < pipes[0] - 200)) play = false, menu = true;
 }
@@ -154,6 +155,7 @@ void gen_pipe() {
         state_portal.push_back(rand() % 10);
         pipe_x += 600;
     }
+    graphics.renderTexture(pause_button, SCREEN_WIDTH - 20, 0);
 }
 
 void present_score() {
@@ -165,15 +167,22 @@ void present_score() {
 }
 
 void present_menu() {
+    int mx, my;
+    SDL_GetMouseState(&mx, &my);
+
     graphics.renderTexture(background, 0, 0);
     graphics.renderTexture(button, 264, 230);
     graphics.renderTexture(button, 264, 300);
     graphics.renderTexture(button, 264, 370);
-    graphics.renderTexture(font_play, 335, 266);
-    graphics.renderTexture(font_quit, 340, 406);
+
+    if (mx >= 290 && mx <= 480 && my >= 256 && my <= 306) graphics.renderTexture(font_play2, 335, 266);
+    else graphics.renderTexture(font_play, 335, 266);
+
+    if (mx >= 290 && mx <= 480 && my >= 256 + 140 && my <= 306 + 140) graphics.renderTexture(font_quit2, 340, 406);
+    else graphics.renderTexture(font_quit, 340, 406);
+
     graphics.renderTexture(name, 25, 30);
-    int mx, my;
-    SDL_GetMouseState(&mx, &my);
+
     if (mx >= 290 && mx <= 480 && my >= 256 && my <= 306 && SDL_MOUSEBUTTONDOWN == e.type) {
         start_to_game(), menu = false, play = true;
     }
@@ -182,4 +191,17 @@ void present_menu() {
     }
 }
 
+void present_pause() {
+    int mx, my;
+    SDL_GetMouseState(&mx, &my);
+
+    graphics.renderTexture(background, 0, 0);
+    graphics.renderTexture(button, 264, 230);
+    if (mx >= 290 && mx <= 480 && my >= 256 && my <= 306) graphics.renderTexture(font_resume2, 310, 266);
+    else graphics.renderTexture(font_resume, 310, 266);
+
+    if (mx >= 290& mx <= 480 && my >= 256 && my <= 306 && SDL_MOUSEBUTTONDOWN == e.type) {
+        pause = false, play = true;
+    }
+}
 #endif // GAME_H

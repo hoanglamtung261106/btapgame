@@ -14,11 +14,17 @@ SDL_Texture* digit[10];
 SDL_Texture* pipe1;
 SDL_Texture* pipe2;
 SDL_Texture* button;
+SDL_Texture* pause_button;
 SDL_Texture* portal[10];
 
 SDL_Texture* font_play;
 SDL_Texture* font_resume;
 SDL_Texture* font_quit;
+
+SDL_Texture* font_play2;
+SDL_Texture* font_resume2;
+SDL_Texture* font_quit2;
+
 SDL_Texture* name;
 
 bool menu = true, pause = false, play = false;
@@ -41,9 +47,14 @@ void initialize() {
     graphics.init();
 
     name = graphics.loadTexture("image/font/bird_dash.png");
+
     font_play = graphics.loadTexture("image/font/play.png");
     font_resume = graphics.loadTexture("image/font/resume.png");
     font_quit = graphics.loadTexture("image/font/quit.png");
+
+    font_play2 = graphics.loadTexture("image/font/play2.png");
+    font_resume2 = graphics.loadTexture("image/font/resume2.png");
+    font_quit2 = graphics.loadTexture("image/font/quit2.png");
 
     bird1[0] = graphics.loadTexture("image/frame/frame-1.png");
     bird1[1] = graphics.loadTexture("image/frame/frame-2.png");
@@ -66,6 +77,7 @@ void initialize() {
     bird4[3] = graphics.loadTexture("image/frame/frame4-4.png");
 
     button = graphics.loadTexture("image/button.png");
+    pause_button = graphics.loadTexture("image/pause_button.png");
 
     score = graphics.loadTexture("image/font/score .png");
     background = graphics.loadTexture("image/background.png");

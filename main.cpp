@@ -8,7 +8,7 @@
 
 using namespace std;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     srand(time(0));
     initialize();
 
@@ -16,24 +16,14 @@ int main(int argc, char *argv[]) {
         if (e.type == SDL_QUIT) return 0;
         graphics.prepareScene();
         const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+
         if (play) {
             graphics.renderTexture(background, 0, 0);
             update();
             gen_pipe();
             present_score();
         }
-
-        else if (pause) {
-            graphics.renderTexture(background, 0, 0);
-            graphics.renderTexture(button, 264, 300);
-            graphics.renderTexture(font_resume, 310, 336);
-            int mx, my;
-            SDL_GetMouseState(&mx, &my);
-            if (mx >= 264 && mx <= 264 + 241 && my >= 300 && my <= 400 && SDL_MOUSEBUTTONDOWN == e.type) {
-                pause = false, play = true;
-            }
-        }
-
+        else if (pause) present_pause();
         else if (menu) present_menu();
 
         SDL_PollEvent(&e);
@@ -41,8 +31,6 @@ int main(int argc, char *argv[]) {
         SDL_Delay(15);
 
     }
-	//SDL_DestroyTexture( manTexture ); manTexture = nullptr;
-	//SDL_DestroyTexture( birdTexture ); birdTexture = nullptr;
 
     graphics.quit();
     return 0;
