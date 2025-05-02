@@ -11,6 +11,7 @@ using namespace std;
 int main(int argc, char* argv[]) {
     srand(time(0));
     initialize();
+    //Mix_Volume(-1, 10);
 
     while (!quit) {
         if (e.type == SDL_QUIT) return 0;
