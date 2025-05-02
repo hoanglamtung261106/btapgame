@@ -27,6 +27,8 @@ SDL_Texture* font_quit2;
 
 SDL_Texture* name;
 
+Mix_Music* music;
+
 bool menu = true, pause = false, play = false;
 bool upside_down = false;
 bool mini = false;
@@ -45,6 +47,8 @@ int space[10] = {20, 17, 20, 20, 23, 19, 20, 20, 19, 20};
 void initialize() {
     srand(time(0));
     graphics.init();
+
+    music = graphics.loadMusic("music/glorious_morning.mp3");
 
     name = graphics.loadTexture("image/font/bird_dash.png");
 

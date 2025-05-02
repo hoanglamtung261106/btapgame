@@ -18,12 +18,20 @@ int main(int argc, char* argv[]) {
         const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 
         if (play) {
+            graphics.play(music);
             graphics.renderTexture(background, 0, 0);
             update();
             gen_pipe();
             present_score();
+            if (pause) Mix_PauseMusic();
+            else if (menu) Mix_HaltMusic();
         }
-        else if (pause) present_pause();
+
+        else if (pause) {
+            present_pause();
+            if (play) Mix_ResumeMusic();
+        }
+
         else if (menu) present_menu();
 
         SDL_PollEvent(&e);
