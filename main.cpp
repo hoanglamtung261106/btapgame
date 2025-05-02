@@ -7,6 +7,7 @@
 #include "game.h"
 
 using namespace std;
+//Tất cả các biến nằm ở file initialize.h, và là biến toàn cục
 
 int main(int argc, char* argv[]) {
     srand(time(0));
@@ -19,18 +20,23 @@ int main(int argc, char* argv[]) {
         const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 
         if (play) {
-            graphics.play(music);
+            if (!state_music && !mute_music) graphics.play(music1);
+            else if (!mute_music) graphics.play(music2);
             graphics.renderTexture(background, 0, 0);
             update();
             gen_pipe();
             present_score();
-            if (pause) Mix_PauseMusic();
-            else if (menu) Mix_HaltMusic();
+            if (pause && !mute_music) Mix_PauseMusic();
+            else if (menu && !mute_music) Mix_HaltMusic();
         }
 
         else if (pause) {
             present_pause();
-            if (play) Mix_ResumeMusic();
+            if (play && !mute_music) Mix_ResumeMusic();
+        }
+
+        else if (settings) {
+            present_settings();
         }
 
         else if (menu) present_menu();
@@ -38,7 +44,6 @@ int main(int argc, char* argv[]) {
         SDL_PollEvent(&e);
         graphics.presentScene();
         SDL_Delay(15);
-
     }
 
     graphics.quit();

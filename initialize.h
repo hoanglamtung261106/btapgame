@@ -20,19 +20,32 @@ SDL_Texture* portal[10];
 SDL_Texture* font_play;
 SDL_Texture* font_resume;
 SDL_Texture* font_quit;
+SDL_Texture* font_settings;
+SDL_Texture* font_menu;
 
 SDL_Texture* font_play2;
 SDL_Texture* font_resume2;
 SDL_Texture* font_quit2;
+SDL_Texture* font_settings2;
+SDL_Texture* font_menu2;
+
+SDL_Texture* font_music;
+SDL_Texture* font_sound;
+SDL_Texture* font_gm1;
+SDL_Texture* font_gm2;
 
 SDL_Texture* name;
 
-Mix_Music* music;
+Mix_Music* music1;
+Mix_Music* music2;
 
-bool menu = true, pause = false, play = false;
+bool menu = true, pause = false, play = false, settings = false;
 bool upside_down = false;
 bool mini = false;
 bool quit = false;
+bool mute_music = false;
+bool mute_sound = false;
+bool state_music = 0;
 
 SDL_Event e;
 int clip = 0;
@@ -48,17 +61,27 @@ void initialize() {
     srand(time(0));
     graphics.init();
 
-    music = graphics.loadMusic("music/glorious_morning.mp3");
+    music1 = graphics.loadMusic("music/glorious_morning.mp3");
+    music2 = graphics.loadMusic("music/glorious_morning_2.mp3");
 
     name = graphics.loadTexture("image/font/bird_dash.png");
 
     font_play = graphics.loadTexture("image/font/play.png");
     font_resume = graphics.loadTexture("image/font/resume.png");
     font_quit = graphics.loadTexture("image/font/quit.png");
+    font_settings = graphics.loadTexture("image/font/settings.png");
+    font_menu = graphics.loadTexture("image/font/menu.png");
 
     font_play2 = graphics.loadTexture("image/font/play2.png");
     font_resume2 = graphics.loadTexture("image/font/resume2.png");
     font_quit2 = graphics.loadTexture("image/font/quit2.png");
+    font_settings2 = graphics.loadTexture("image/font/settings2.png");
+    font_menu2 = graphics.loadTexture("image/font/menu2.png");
+
+    font_music = graphics.loadTexture("image/font/music.png");
+    font_sound = graphics.loadTexture("image/font/sound.png");
+    font_gm1 = graphics.loadTexture("image/font/gm1.png");
+    font_gm2 = graphics.loadTexture("image/font/gm2.png");
 
     bird1[0] = graphics.loadTexture("image/frame/frame-1.png");
     bird1[1] = graphics.loadTexture("image/frame/frame-2.png");

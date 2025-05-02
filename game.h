@@ -177,7 +177,8 @@ void present_menu() {
 
     if (mx >= 290 && mx <= 480 && my >= 256 && my <= 306) graphics.renderTexture(font_play2, 335, 266);
     else graphics.renderTexture(font_play, 335, 266);
-
+    if (mx >= 290 && mx <= 480 && my >= 326 && my <= 376) graphics.renderTexture(font_settings2, 293, 336);
+    else graphics.renderTexture(font_settings, 293, 336);
     if (mx >= 290 && mx <= 480 && my >= 256 + 140 && my <= 306 + 140) graphics.renderTexture(font_quit2, 340, 406);
     else graphics.renderTexture(font_quit, 340, 406);
 
@@ -186,9 +187,8 @@ void present_menu() {
     if (mx >= 290 && mx <= 480 && my >= 256 && my <= 306 && SDL_MOUSEBUTTONDOWN == e.type) {
         start_to_game(), menu = false, play = true;
     }
-    else if (mx >= 290 && mx <= 480 && my >= 256 + 140 && my <= 306 + 140 && SDL_MOUSEBUTTONDOWN == e.type) {
-        quit = true;
-    }
+    else if (mx >= 290 && mx <= 480 && my >= 326 && my <= 376 && SDL_MOUSEBUTTONDOWN == e.type) settings = true, menu = false;
+    else if (mx >= 290 && mx <= 480 && my >= 396 && my <= 446 && SDL_MOUSEBUTTONDOWN == e.type) quit = true;
 }
 
 void present_pause() {
@@ -196,12 +196,38 @@ void present_pause() {
     SDL_GetMouseState(&mx, &my);
 
     graphics.renderTexture(background, 0, 0);
-    graphics.renderTexture(button, 264, 230);
-    if (mx >= 290 && mx <= 480 && my >= 256 && my <= 306) graphics.renderTexture(font_resume2, 310, 266);
-    else graphics.renderTexture(font_resume, 310, 266);
+    graphics.renderTexture(button, 264, 300);
+    graphics.renderTexture(button, 264, 370);
+    if (mx >= 290 && mx <= 480 && my >= 326 && my <= 376) graphics.renderTexture(font_resume2, 310, 336);
+    else graphics.renderTexture(font_resume, 310, 336);
 
-    if (mx >= 290& mx <= 480 && my >= 256 && my <= 306 && SDL_MOUSEBUTTONDOWN == e.type) {
+    if (mx >= 290 && mx <= 480 && my >= 396 && my <= 446) graphics.renderTexture(font_menu2, 332, 406);
+    else graphics.renderTexture(font_menu, 332, 406);
+
+    if (mx >= 290 && mx <= 480 && my >= 326 && my <= 376 && SDL_MOUSEBUTTONDOWN == e.type) {
         pause = false, play = true;
     }
+    if (mx >= 290 && mx <= 480 && my >= 396 && my <= 446 && SDL_MOUSEBUTTONDOWN == e.type) {
+        pause = false, menu = true;
+    }
+}
+
+void present_settings() {
+    graphics.renderTexture(background, 0, 0);
+    graphics.renderTexture(font_music, 25, 25);
+    graphics.renderTexture(font_sound, 25, 125);
+    graphics.renderTexture(button, 264, 370);
+
+    if (!state_music) graphics.renderTexture(font_gm1, 25, 225);
+    else graphics.renderTexture(font_gm2, 25, 225);
+    int mx, my;
+    SDL_GetMouseState(&mx, &my);
+
+    if (mx >= 290 && mx <= 480 && my >= 396 && my <= 446) graphics.renderTexture(font_menu2, 332, 406);
+    else graphics.renderTexture(font_menu, 332, 406);
+
+    if (mx >= 290 && mx <= 480 && my >= 396 && my <= 446 && SDL_MOUSEBUTTONDOWN == e.type) menu = true, settings = false;
+
+    if (mx >= 595 && my <= 740 && my >= 230 && my <= 280 && SDL_MOUSEBUTTONDOWN == e.type) state_music ^= 1;
 }
 #endif // GAME_H
