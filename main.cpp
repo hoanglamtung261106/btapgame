@@ -7,12 +7,11 @@
 #include "game.h"
 
 using namespace std;
-//Tất cả các biến nằm ở file initialize.h, và là biến toàn cục
+//Tất cả các biến nằm ở file initialize.h, hầu hết là biến toàn cục
 
 int main(int argc, char* argv[]) {
     srand(time(0));
     initialize();
-    //Mix_Volume(-1, 10);
 
     while (!quit) {
         if (e.type == SDL_QUIT) return 0;

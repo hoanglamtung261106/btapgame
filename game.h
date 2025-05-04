@@ -15,6 +15,7 @@ vector<int> conv(int point) {
 }
 
 void start_to_game() {
+    Mix_HaltMusic();
     y = 150;
     upside_down = mini = false;
     for (int i = 0; i < 2; i++) pipes[i] = rand() % (SCREEN_HEIGHT - 200) + 200;
@@ -23,9 +24,7 @@ void start_to_game() {
     point = 0;
 }
 
-void update() {
-    const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-
+void change_bird() {
     if (pipe_x == 800 && state_portal[0] == 0) upside_down ^= 1;
     else if (pipe_x == 800 && state_portal[0] == 1) upside_down = true;
     else if (pipe_x == 800 && state_portal[0] == 2) upside_down = false;
@@ -61,7 +60,21 @@ void update() {
             else y += 10;
         }
     }
+}
 
+void check_play() {
+    const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+    int mx, my; SDL_GetMouseState(&mx, &my);
+    if (currentKeyStates[SDL_SCANCODE_ESCAPE]) play = false, pause = true;
+    else if ((mx - SCREEN_WIDTH + 10) * (mx - SCREEN_WIDTH + 10) + (my - 10) * (my - 10) <= 100 && SDL_MOUSEBUTTONDOWN == e.type) play = false, pause = true;
+    if (!mini && pipe_x - 600 == 150 + 90 && (y + 80 > pipes[0] || y < pipes[0] - 200)) play = false, graphics.play(game_over), menu = true;
+    else if (mini && pipe_x - 600 == 150 + 45 && (y + 40 > pipes[0] || y < pipes[0] - 200)) play = false, graphics.play(game_over), menu = true;
+}
+
+void update() {
+    change_bird();
+
+    const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
     if (!upside_down && !mini) /*Xuôi và to*/ {
         if (currentKeyStates[SDL_SCANCODE_UP] && y >= 10) {
             if (pipe_x - 600 < x + 90 && pipe_x - 600 + 100 > x) {
@@ -132,11 +145,7 @@ void update() {
 
     clip = (clip + 1) % 4; //Update 1 đoạn mới cho 2 loại chim (14 đoạn tất cả)
 
-    int mx, my; SDL_GetMouseState(&mx, &my);
-    if (currentKeyStates[SDL_SCANCODE_ESCAPE]) play = false, pause = true;
-    else if ((mx - SCREEN_WIDTH + 10) * (mx - SCREEN_WIDTH + 10) + (my - 10) * (my - 10) <= 100 && SDL_MOUSEBUTTONDOWN == e.type) play = false, pause = true;
-    if (!mini && pipe_x - 600 == 150 + 90 && (y + 80 > pipes[0] || y < pipes[0] - 200)) play = false, menu = true;
-    else if (mini && pipe_x - 600 == 150 + 45 && (y + 40 > pipes[0] || y < pipes[0] - 200)) play = false, menu = true;
+    check_play();
 }
 
 void gen_pipe() {
@@ -163,7 +172,7 @@ void present_score() {
     vector<int> vpoint = conv(point);
     int d = 115;
     for (int i = 0; i < vpoint.size(); i++) graphics.renderTexture(digit[vpoint[i]], d, 0), d += space[vpoint[i]];
-    if (pipe_x - 600 == 150) point++;
+    if (pipe_x - 600 == 150) point++, graphics.play(get_score);
 }
 
 void present_menu() {
@@ -196,20 +205,38 @@ void present_pause() {
     SDL_GetMouseState(&mx, &my);
 
     graphics.renderTexture(background, 0, 0);
+    graphics.renderTexture(font_music, 25, 25);
+    graphics.renderTexture(font_sound, 25, 125);
+    graphics.renderTexture(button, 264, 230);
     graphics.renderTexture(button, 264, 300);
     graphics.renderTexture(button, 264, 370);
-    if (mx >= 290 && mx <= 480 && my >= 326 && my <= 376) graphics.renderTexture(font_resume2, 310, 336);
-    else graphics.renderTexture(font_resume, 310, 336);
+    if (mx >= 290 && mx <= 480 && my >= 256 && my <= 306) graphics.renderTexture(font_resume2, 310, 266);
+    else graphics.renderTexture(font_resume, 310, 266);
+
+    if (mx >= 290 && mx <= 480 && my >= 326 && my <= 376) graphics.renderTexture(font_replay2, 310, 336);
+    else graphics.renderTexture(font_replay, 310, 336);
 
     if (mx >= 290 && mx <= 480 && my >= 396 && my <= 446) graphics.renderTexture(font_menu2, 332, 406);
     else graphics.renderTexture(font_menu, 332, 406);
 
-    if (mx >= 290 && mx <= 480 && my >= 326 && my <= 376 && SDL_MOUSEBUTTONDOWN == e.type) {
+
+    if (!mute_music) graphics.renderTexture(unmute_button, 400, 25);
+    else graphics.renderTexture(mute_button, 400, 25);
+
+    if (!mute_sound) graphics.renderTexture(unmute_button, 400, 125);
+    else graphics.renderTexture(mute_button, 400, 125);
+
+    if (mx >= 290 && mx <= 480 && my >= 256 && my <= 306 && SDL_MOUSEBUTTONDOWN == e.type) {
         pause = false, play = true;
+    }
+    if (mx >= 290 && mx <= 480 && my >= 326 && my <= 376 && SDL_MOUSEBUTTONDOWN == e.type) {
+        pause = false, play = true, start_to_game();
     }
     if (mx >= 290 && mx <= 480 && my >= 396 && my <= 446 && SDL_MOUSEBUTTONDOWN == e.type) {
         pause = false, menu = true;
     }
+    if ((mx - 430) * (mx - 430) + (my - 55) * (my - 55) <= 3600 && SDL_MOUSEBUTTONDOWN == e.type) mute_music ^= 1;
+    if ((mx - 430) * (mx - 430) + (my - 155) * (my - 155) <= 3600 && SDL_MOUSEBUTTONDOWN == e.type) mute_sound ^= 1;
 }
 
 void present_settings() {
@@ -217,6 +244,12 @@ void present_settings() {
     graphics.renderTexture(font_music, 25, 25);
     graphics.renderTexture(font_sound, 25, 125);
     graphics.renderTexture(button, 264, 370);
+
+    if (!mute_music) graphics.renderTexture(unmute_button, 400, 25);
+    else graphics.renderTexture(mute_button, 400, 25);
+
+    if (!mute_sound) graphics.renderTexture(unmute_button, 400, 125);
+    else graphics.renderTexture(mute_button, 400, 125);
 
     if (!state_music) graphics.renderTexture(font_gm1, 25, 225);
     else graphics.renderTexture(font_gm2, 25, 225);
@@ -227,7 +260,8 @@ void present_settings() {
     else graphics.renderTexture(font_menu, 332, 406);
 
     if (mx >= 290 && mx <= 480 && my >= 396 && my <= 446 && SDL_MOUSEBUTTONDOWN == e.type) menu = true, settings = false;
-
     if (mx >= 595 && my <= 740 && my >= 230 && my <= 280 && SDL_MOUSEBUTTONDOWN == e.type) state_music ^= 1;
+    if ((mx - 430) * (mx - 430) + (my - 55) * (my - 55) <= 3600 && SDL_MOUSEBUTTONDOWN == e.type) mute_music ^= 1;
+    if ((mx - 430) * (mx - 430) + (my - 155) * (my - 155) <= 3600 && SDL_MOUSEBUTTONDOWN == e.type) mute_sound ^= 1;
 }
 #endif // GAME_H

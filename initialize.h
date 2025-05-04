@@ -15,6 +15,8 @@ SDL_Texture* pipe1;
 SDL_Texture* pipe2;
 SDL_Texture* button;
 SDL_Texture* pause_button;
+SDL_Texture* mute_button;
+SDL_Texture* unmute_button;
 SDL_Texture* portal[10];
 
 SDL_Texture* font_play;
@@ -22,12 +24,14 @@ SDL_Texture* font_resume;
 SDL_Texture* font_quit;
 SDL_Texture* font_settings;
 SDL_Texture* font_menu;
+SDL_Texture* font_replay;
 
 SDL_Texture* font_play2;
 SDL_Texture* font_resume2;
 SDL_Texture* font_quit2;
 SDL_Texture* font_settings2;
 SDL_Texture* font_menu2;
+SDL_Texture* font_replay2;
 
 SDL_Texture* font_music;
 SDL_Texture* font_sound;
@@ -38,6 +42,8 @@ SDL_Texture* name;
 
 Mix_Music* music1;
 Mix_Music* music2;
+Mix_Chunk* get_score;
+Mix_Chunk* game_over;
 
 bool menu = true, pause = false, play = false, settings = false;
 bool upside_down = false;
@@ -63,6 +69,8 @@ void initialize() {
 
     music1 = graphics.loadMusic("music/glorious_morning.mp3");
     music2 = graphics.loadMusic("music/glorious_morning_2.mp3");
+    get_score = graphics.loadSound("music/get_score.mp3");
+    game_over = graphics.loadSound("music/die.mp3");
 
     name = graphics.loadTexture("image/font/bird_dash.png");
 
@@ -71,12 +79,14 @@ void initialize() {
     font_quit = graphics.loadTexture("image/font/quit.png");
     font_settings = graphics.loadTexture("image/font/settings.png");
     font_menu = graphics.loadTexture("image/font/menu.png");
+    font_replay = graphics.loadTexture("image/font/replay.png");
 
     font_play2 = graphics.loadTexture("image/font/play2.png");
     font_resume2 = graphics.loadTexture("image/font/resume2.png");
     font_quit2 = graphics.loadTexture("image/font/quit2.png");
     font_settings2 = graphics.loadTexture("image/font/settings2.png");
     font_menu2 = graphics.loadTexture("image/font/menu2.png");
+    font_replay2 = graphics.loadTexture("image/font/replay2.png");
 
     font_music = graphics.loadTexture("image/font/music.png");
     font_sound = graphics.loadTexture("image/font/sound.png");
@@ -103,8 +113,10 @@ void initialize() {
     bird4[2] = graphics.loadTexture("image/frame/frame4-3.png");
     bird4[3] = graphics.loadTexture("image/frame/frame4-4.png");
 
-    button = graphics.loadTexture("image/button.png");
-    pause_button = graphics.loadTexture("image/pause_button.png");
+    button = graphics.loadTexture("image/button/button.png");
+    pause_button = graphics.loadTexture("image/button/pause_button.png");
+    mute_button = graphics.loadTexture("image/button/mute.png");
+    unmute_button = graphics.loadTexture("image/button/unmute.png");
 
     score = graphics.loadTexture("image/font/score .png");
     background = graphics.loadTexture("image/background.png");
