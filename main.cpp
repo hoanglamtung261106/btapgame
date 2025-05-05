@@ -12,6 +12,7 @@ using namespace std;
 int main(int argc, char* argv[]) {
     srand(time(0));
     initialize();
+    graphics.play(intro);
 
     while (!quit) {
         if (e.type == SDL_QUIT) {quit = true; break;}

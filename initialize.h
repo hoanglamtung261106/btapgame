@@ -46,6 +46,8 @@ Mix_Music* music1;
 Mix_Music* music2;
 Mix_Chunk* get_score;
 Mix_Chunk* game_over;
+Mix_Chunk* get_secret;
+Mix_Chunk* intro;
 
 bool menu = true, pause = false, play = false, settings = false;
 bool upside_down = false;
@@ -79,6 +81,8 @@ void initialize() {
     music2 = graphics.loadMusic("music/glorious_morning_2.mp3");
     get_score = graphics.loadSound("music/get_score.mp3");
     game_over = graphics.loadSound("music/die.mp3");
+    get_secret = graphics.loadSound("music/claw_grab_best.wav");
+    intro = graphics.loadSound("music/level_intro.wav");
 
     name = graphics.loadTexture("image/font/bird_dash.png");
 

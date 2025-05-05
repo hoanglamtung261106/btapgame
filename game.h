@@ -221,7 +221,10 @@ void present_score() {
 
     if (pipe_x - 600 == 150) {
         point += mul_ten; highpoint = max(highpoint, point);
-        if (!mute_sound) graphics.play(get_score);
+        if (!mute_sound) {
+            if (state_portal[0] != 5) graphics.play(get_score);
+            else graphics.play(get_secret);
+        }
     }
 }
 
@@ -249,10 +252,10 @@ void present_menu() {
     for (int i = 0; i < vpoint.size(); i++) graphics.renderTexture(digit[vpoint[i]], d, 180), d += space[vpoint[i]];
 
     if (mx >= 290 && mx <= 480 && my >= 256 && my <= 306 && SDL_MOUSEBUTTONDOWN == e.type) {
-        start_to_game(), menu = false, play = true;
+        Mix_HaltChannel(-1), start_to_game(), menu = false, play = true;
     }
-    else if (mx >= 290 && mx <= 480 && my >= 326 && my <= 376 && SDL_MOUSEBUTTONDOWN == e.type) settings = true, menu = false;
-    else if (mx >= 290 && mx <= 480 && my >= 396 && my <= 446 && SDL_MOUSEBUTTONDOWN == e.type) quit = true;
+    else if (mx >= 290 && mx <= 480 && my >= 326 && my <= 376 && SDL_MOUSEBUTTONDOWN == e.type) Mix_HaltChannel(-1), settings = true, menu = false;
+    else if (mx >= 290 && mx <= 480 && my >= 396 && my <= 446 && SDL_MOUSEBUTTONDOWN == e.type) Mix_HaltChannel(-1), quit = true;
 }
 
 void present_pause() {
