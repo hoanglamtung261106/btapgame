@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
     initialize();
 
     while (!quit) {
-        if (e.type == SDL_QUIT) return 0;
+        if (e.type == SDL_QUIT) {quit = true; break;}
         graphics.prepareScene();
         const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 
@@ -46,5 +46,7 @@ int main(int argc, char* argv[]) {
     }
 
     graphics.quit();
+    ofstream fo("highscore.txt", ios::out | ios::trunc);
+    fo << highpoint;
     return 0;
 }

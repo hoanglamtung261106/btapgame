@@ -10,6 +10,7 @@ SDL_Texture* bird3[4];
 SDL_Texture* bird4[4];
 
 SDL_Texture* score;
+SDL_Texture* highscore;
 SDL_Texture* digit[10];
 SDL_Texture* pipe1;
 SDL_Texture* pipe2;
@@ -39,6 +40,7 @@ SDL_Texture* font_gm1;
 SDL_Texture* font_gm2;
 
 SDL_Texture* name;
+SDL_Texture* gift;
 
 Mix_Music* music1;
 Mix_Music* music2;
@@ -52,10 +54,13 @@ bool quit = false;
 bool mute_music = false;
 bool mute_sound = false;
 bool state_music = 0;
+bool is_game_over = false;
+int mul_ten = 1;
 
 SDL_Event e;
 int clip = 0;
-int x = 150, y = 150, point = 0;
+const int x = 150;
+int y = 150, point = 0, highpoint;
 int pipe_x = 1200; //xx la toa do x cua pipe
 
 vector<int> pipes(2);
@@ -63,10 +68,13 @@ vector<int> state_portal(2);
 
 int space[10] = {20, 17, 20, 20, 23, 19, 20, 20, 19, 20};
 
+ifstream fi("highscore.txt");
+
 void initialize() {
     srand(time(0));
     graphics.init();
 
+    fi >> highpoint;
     music1 = graphics.loadMusic("music/glorious_morning.mp3");
     music2 = graphics.loadMusic("music/glorious_morning_2.mp3");
     get_score = graphics.loadSound("music/get_score.mp3");
@@ -119,6 +127,7 @@ void initialize() {
     unmute_button = graphics.loadTexture("image/button/unmute.png");
 
     score = graphics.loadTexture("image/font/score .png");
+    highscore = graphics.loadTexture("image/font/high_score.png");
     background = graphics.loadTexture("image/background.png");
 
     pipe1 = graphics.loadTexture("image/pipe/pipe1.png");
@@ -134,4 +143,5 @@ void initialize() {
     portal[2] = graphics.loadTexture("image/portal/down_portal.png");
     portal[3] = graphics.loadTexture("image/portal/mini_portal.png");
     portal[4] = graphics.loadTexture("image/portal/big_portal.png");
+    portal[5] = graphics.loadTexture("image/gift.png");
 }

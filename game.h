@@ -60,15 +60,25 @@ void change_bird() {
             else y += 10;
         }
     }
+    else if (state_portal[0] == 5) {
+        if (!mini) {
+            if (pipe_x - 600 == 240 && y + 80 >= pipes[0] - 150 && y <= pipes[0] - 50) mul_ten = 5;
+        }
+        else if (mini) {
+            if (pipe_x - 600 == 195 && y + 40 >= pipes[0] - 150 && y <= pipes[0] - 50) mul_ten = 5;
+        }
+    }
 }
+
+void present_gameover();
 
 void check_play() {
     const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
     int mx, my; SDL_GetMouseState(&mx, &my);
     if (currentKeyStates[SDL_SCANCODE_ESCAPE]) play = false, pause = true;
     else if ((mx - SCREEN_WIDTH + 10) * (mx - SCREEN_WIDTH + 10) + (my - 10) * (my - 10) <= 100 && SDL_MOUSEBUTTONDOWN == e.type) play = false, pause = true;
-    if (!mini && pipe_x - 600 == 150 + 90 && (y + 80 > pipes[0] || y < pipes[0] - 200)) play = false, graphics.play(game_over), menu = true;
-    else if (mini && pipe_x - 600 == 150 + 45 && (y + 40 > pipes[0] || y < pipes[0] - 200)) play = false, graphics.play(game_over), menu = true;
+    if (!mini && pipe_x - 600 == 150 + 90 && (y + 80 > pipes[0] || y < pipes[0] - 200)) graphics.play(game_over), present_gameover();
+    else if (mini && pipe_x - 600 == 150 + 45 && (y + 40 > pipes[0] || y < pipes[0] - 200)) graphics.play(game_over), present_gameover();
 }
 
 void update() {
@@ -148,11 +158,45 @@ void update() {
     check_play();
 }
 
+void present_gameover() {
+    graphics.prepareScene();
+    while (y <= 1000) {
+        graphics.prepareScene();
+        graphics.renderTexture(background, 0, 0);
+        for (int i = 0; i <= 1; i++) {
+            graphics.renderTexture(pipe1, pipe_x - 600 * (1 - i), pipes[i]);
+            graphics.renderTexture(pipe2, pipe_x - 600 * (1 - i), pipes[i] - 600);
+            graphics.renderTexture(portal[state_portal[i]], pipe_x - 600 * (1 - i), pipes[i] - 195);
+        }
+        graphics.renderTexture(pause_button, SCREEN_WIDTH - 20, 0);
+
+        if (!upside_down && !mini) graphics.renderTexture(bird1[clip], x, y);
+        else if (upside_down && !mini) graphics.renderTexture(bird2[clip], x, y);
+        else if (!upside_down && mini) graphics.renderTexture(bird3[clip], x, y);
+        else if (upside_down && mini) graphics.renderTexture(bird4[clip], x, y);
+
+        graphics.renderTexture(score, 0, 0);
+        graphics.renderTexture(highscore, 0, 30);
+        vector<int> vpoint = conv(point);
+
+        int d = 115;
+        for (int i = 0; i < vpoint.size(); i++) graphics.renderTexture(digit[vpoint[i]], d, 0), d += space[vpoint[i]];
+
+        y += 40;
+        SDL_PollEvent(&e);
+        graphics.presentScene();
+        SDL_Delay(5);
+    }
+    start_to_game();
+    SDL_Delay(1000);
+}
+
 void gen_pipe() {
     for (int i = 0; i <= 1; i++) {
         graphics.renderTexture(pipe1, pipe_x - 600 * (1 - i), pipes[i]);
         graphics.renderTexture(pipe2, pipe_x - 600 * (1 - i), pipes[i] - 600);
-        graphics.renderTexture(portal[state_portal[i]], pipe_x - 600 * (1 - i), pipes[i] - 195);
+        if (state_portal[i] <= 4) graphics.renderTexture(portal[state_portal[i]], pipe_x - 600 * (1 - i), pipes[i] - 195);
+        else if (state_portal[i] == 5) graphics.renderTexture(portal[5], pipe_x - 600 * (1 - i), pipes[i] - 150);
     }
     pipe_x -= 5;
 
@@ -169,10 +213,16 @@ void gen_pipe() {
 
 void present_score() {
     graphics.renderTexture(score, 0, 0);
+    graphics.renderTexture(highscore, 0, 30);
     vector<int> vpoint = conv(point);
+
     int d = 115;
     for (int i = 0; i < vpoint.size(); i++) graphics.renderTexture(digit[vpoint[i]], d, 0), d += space[vpoint[i]];
-    if (pipe_x - 600 == 150) point++, graphics.play(get_score);
+
+    if (pipe_x - 600 == 150) {
+        point += mul_ten; highpoint = max(highpoint, point);
+        if (!mute_sound) graphics.play(get_score);
+    }
 }
 
 void present_menu() {
@@ -192,6 +242,11 @@ void present_menu() {
     else graphics.renderTexture(font_quit, 340, 406);
 
     graphics.renderTexture(name, 25, 30);
+
+    vector<int> vpoint = conv(highpoint);
+    graphics.renderTexture(highscore, 240, 180);
+    int d = 240 + 259;
+    for (int i = 0; i < vpoint.size(); i++) graphics.renderTexture(digit[vpoint[i]], d, 180), d += space[vpoint[i]];
 
     if (mx >= 290 && mx <= 480 && my >= 256 && my <= 306 && SDL_MOUSEBUTTONDOWN == e.type) {
         start_to_game(), menu = false, play = true;
