@@ -22,6 +22,8 @@ void start_to_game() {
     for (int i = 0; i < 2; i++) state_portal[i] = rand() % 5;
     pipe_x = 1200;
     point = 0;
+    mul_ten = 1;
+    time_secret = -1;
 }
 
 void change_bird() {
@@ -60,13 +62,14 @@ void change_bird() {
             else y += 10;
         }
     }
-    else if (state_portal[0] == 5) {
+    else if (state_portal[0] == 5 && time_secret == -1) {
         if (!mini) {
             if (pipe_x - 600 == 240 && y + 80 >= pipes[0] - 150 && y <= pipes[0] - 50) mul_ten = 5;
         }
         else if (mini) {
             if (pipe_x - 600 == 195 && y + 40 >= pipes[0] - 150 && y <= pipes[0] - 50) mul_ten = 5;
         }
+        if (mul_ten == 5) time_secret = 20000;
     }
 }
 
@@ -166,7 +169,8 @@ void present_gameover() {
         for (int i = 0; i <= 1; i++) {
             graphics.renderTexture(pipe1, pipe_x - 600 * (1 - i), pipes[i]);
             graphics.renderTexture(pipe2, pipe_x - 600 * (1 - i), pipes[i] - 600);
-            graphics.renderTexture(portal[state_portal[i]], pipe_x - 600 * (1 - i), pipes[i] - 195);
+            if (state_portal[i] <= 4) graphics.renderTexture(portal[state_portal[i]], pipe_x - 600 * (1 - i), pipes[i] - 195);
+            else if (state_portal[i] == 5 && time_secret <= 100) graphics.renderTexture(portal[5], pipe_x - 600 * (1 - i), pipes[i] - 150);
         }
         graphics.renderTexture(pause_button, SCREEN_WIDTH - 20, 0);
 
@@ -176,11 +180,12 @@ void present_gameover() {
         else if (upside_down && mini) graphics.renderTexture(bird4[clip], x, y);
 
         graphics.renderTexture(score, 0, 0);
-        graphics.renderTexture(highscore, 0, 30);
         vector<int> vpoint = conv(point);
 
         int d = 115;
         for (int i = 0; i < vpoint.size(); i++) graphics.renderTexture(digit[vpoint[i]], d, 0), d += space[vpoint[i]];
+
+        if (mul_ten == 5) graphics.renderTexture(add5, d + 10, 0);
 
         y += 40;
         SDL_PollEvent(&e);
@@ -196,7 +201,7 @@ void gen_pipe() {
         graphics.renderTexture(pipe1, pipe_x - 600 * (1 - i), pipes[i]);
         graphics.renderTexture(pipe2, pipe_x - 600 * (1 - i), pipes[i] - 600);
         if (state_portal[i] <= 4) graphics.renderTexture(portal[state_portal[i]], pipe_x - 600 * (1 - i), pipes[i] - 195);
-        else if (state_portal[i] == 5) graphics.renderTexture(portal[5], pipe_x - 600 * (1 - i), pipes[i] - 150);
+        else if (state_portal[i] == 5 && time_secret <= 100) graphics.renderTexture(portal[5], pipe_x - 600 * (1 - i), pipes[i] - 150);
     }
     pipe_x -= 5;
 
@@ -213,11 +218,12 @@ void gen_pipe() {
 
 void present_score() {
     graphics.renderTexture(score, 0, 0);
-    graphics.renderTexture(highscore, 0, 30);
     vector<int> vpoint = conv(point);
 
     int d = 115;
     for (int i = 0; i < vpoint.size(); i++) graphics.renderTexture(digit[vpoint[i]], d, 0), d += space[vpoint[i]];
+
+    if (mul_ten == 5) graphics.renderTexture(add5, d + 10, 0);
 
     if (pipe_x - 600 == 150) {
         point += mul_ten; highpoint = max(highpoint, point);
@@ -226,6 +232,8 @@ void present_score() {
             else graphics.play(get_secret);
         }
     }
+    time_secret -= 15;
+    if (time_secret < 0) time_secret = -1, mul_ten = 1;
 }
 
 void present_menu() {

@@ -12,6 +12,7 @@ SDL_Texture* bird4[4];
 SDL_Texture* score;
 SDL_Texture* highscore;
 SDL_Texture* digit[10];
+SDL_Texture* add5;
 SDL_Texture* pipe1;
 SDL_Texture* pipe2;
 SDL_Texture* button;
@@ -57,7 +58,7 @@ bool mute_music = false;
 bool mute_sound = false;
 bool state_music = 0;
 bool is_game_over = false;
-int mul_ten = 1;
+int mul_ten = 1, time_secret = -1;
 
 SDL_Event e;
 int clip = 0;
@@ -136,6 +137,8 @@ void initialize() {
 
     pipe1 = graphics.loadTexture("image/pipe/pipe1.png");
     pipe2 = graphics.loadTexture("image/pipe/pipe2.png");
+
+    add5 = graphics.loadTexture("image/font/add5.png");
 
     for (int i = 0; i < 10; i++) digit[i] = graphics.loadTexture(DIGIT[i]);
 
