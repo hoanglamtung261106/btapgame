@@ -71,6 +71,24 @@ void change_bird() {
         }
         if (mul_ten == 5) time_secret = 20000;
     }
+
+    else if (state_portal[0] == 6 && time_secret == -1) {
+        if (!mini) {
+            if (pipe_x - 600 == 240 && y + 80 >= pipes[0] - 150 && y <= pipes[0] - 50) point = max(point - 20, 0);
+        }
+        else if (mini) {
+            if (pipe_x - 600 == 195 && y + 40 >= pipes[0] - 150 && y <= pipes[0] - 50) point = max(point - 20, 0);
+        }
+    }
+
+    else if (state_portal[0] == 7 && time_secret == -1) {
+        if (!mini) {
+            if (pipe_x - 600 == 240 && y + 80 >= pipes[0] - 150 && y <= pipes[0] - 50) point += 20;
+        }
+        else if (mini) {
+            if (pipe_x - 600 == 195 && y + 40 >= pipes[0] - 150 && y <= pipes[0] - 50) point += 20;
+        }
+    }
 }
 
 void present_gameover();
@@ -171,6 +189,8 @@ void present_gameover() {
             graphics.renderTexture(pipe2, pipe_x - 600 * (1 - i), pipes[i] - 600);
             if (state_portal[i] <= 4) graphics.renderTexture(portal[state_portal[i]], pipe_x - 600 * (1 - i), pipes[i] - 195);
             else if (state_portal[i] == 5 && time_secret <= 100) graphics.renderTexture(portal[5], pipe_x - 600 * (1 - i), pipes[i] - 150);
+            else if (state_portal[i] == 6 && time_secret <= 100) graphics.renderTexture(portal[5], pipe_x - 600 * (1 - i), pipes[i] - 150);
+            else if (state_portal[i] == 7 && time_secret <= 100) graphics.renderTexture(portal[5], pipe_x - 600 * (1 - i), pipes[i] - 150);
         }
         graphics.renderTexture(pause_button, SCREEN_WIDTH - 20, 0);
 
@@ -202,8 +222,9 @@ void gen_pipe() {
         graphics.renderTexture(pipe2, pipe_x - 600 * (1 - i), pipes[i] - 600);
         if (state_portal[i] <= 4) graphics.renderTexture(portal[state_portal[i]], pipe_x - 600 * (1 - i), pipes[i] - 195);
         else if (state_portal[i] == 5 && time_secret <= 100) graphics.renderTexture(portal[5], pipe_x - 600 * (1 - i), pipes[i] - 150);
+        else if (state_portal[i] == 6 && time_secret <= 100) graphics.renderTexture(portal[5], pipe_x - 600 * (1 - i), pipes[i] - 150);
+        else if (state_portal[i] == 7 && time_secret <= 100) graphics.renderTexture(portal[5], pipe_x - 600 * (1 - i), pipes[i] - 150);
     }
-    pipe_x -= 5;
 
     if (pipe_x - 500 < 0) {
         pipes.erase(pipes.begin());
@@ -218,22 +239,38 @@ void gen_pipe() {
 
 void present_score() {
     graphics.renderTexture(score, 0, 0);
+
+    if (pipe_x - 600 == 150) {
+        if (!mute_sound) {
+            if (time_secret == -1) {
+                if (state_portal[0] != 5 && state_portal[0] != 6 && state_portal[0] != 7) graphics.play(get_score), point += mul_ten;
+                else if (state_portal[0] == 5) graphics.play(get_secret), point += mul_ten;
+                else if (state_portal[0] == 6) graphics.play(bad);
+                else if (state_portal[0] == 7) graphics.play(good);
+            }
+            else {
+                if (state_portal[0] == 5) {
+                    if (!mini && time_secret == 20000 - 15 * 18) graphics.play(get_secret);
+                    else if (mini && time_secret == 20000 - 15 * 9) graphics.play(get_secret);
+                    else graphics.play(get_score);
+                }
+                else graphics.play(get_score);
+                point += mul_ten;
+            }
+        }
+        highpoint = max(highpoint, point);
+        cerr << state_portal[0] << " ";
+    }
+    time_secret -= 15;
+    pipe_x -= 5;
+    if (time_secret < 0) time_secret = -1, mul_ten = 1;
+
     vector<int> vpoint = conv(point);
 
     int d = 115;
     for (int i = 0; i < vpoint.size(); i++) graphics.renderTexture(digit[vpoint[i]], d, 0), d += space[vpoint[i]];
 
     if (mul_ten == 5) graphics.renderTexture(add5, d + 10, 0);
-
-    if (pipe_x - 600 == 150) {
-        point += mul_ten; highpoint = max(highpoint, point);
-        if (!mute_sound) {
-            if (state_portal[0] != 5) graphics.play(get_score);
-            else graphics.play(get_secret);
-        }
-    }
-    time_secret -= 15;
-    if (time_secret < 0) time_secret = -1, mul_ten = 1;
 }
 
 void present_menu() {

@@ -49,6 +49,8 @@ Mix_Chunk* get_score;
 Mix_Chunk* game_over;
 Mix_Chunk* get_secret;
 Mix_Chunk* intro;
+Mix_Chunk* good;
+Mix_Chunk* bad;
 
 bool menu = true, pause = false, play = false, settings = false;
 bool upside_down = false;
@@ -84,6 +86,8 @@ void initialize() {
     game_over = graphics.loadSound("music/die.mp3");
     get_secret = graphics.loadSound("music/claw_grab_best.wav");
     intro = graphics.loadSound("music/level_intro.wav");
+    good = graphics.loadSound("music/claw_grab_good.wav");
+    bad = graphics.loadSound("music/claw_grab_bad.wav");
 
     name = graphics.loadTexture("image/font/bird_dash.png");
 
