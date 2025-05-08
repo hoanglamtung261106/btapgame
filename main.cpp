@@ -4,6 +4,7 @@
 #include <SDL_mixer.h>
 #include "definition.h"
 #include "initialize.h"
+#include "present.h"
 #include "game.h"
 
 using namespace std;
