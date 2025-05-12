@@ -21,12 +21,12 @@ int main(int argc, char* argv[]) {
         const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 
         if (play) {
-            if (!state_music && !mute_music) graphics.play(music1);
-            else if (!mute_music) graphics.play(music2);
+            Mix_HaltMusic();
             graphics.renderTexture(background, 0, 0);
             update();
             gen_pipe();
             present_score();
+            present_bar();
             if (pause && !mute_music) Mix_PauseMusic();
             else if (menu && !mute_music) Mix_HaltMusic();
         }
@@ -40,7 +40,10 @@ int main(int argc, char* argv[]) {
             present_settings();
         }
 
-        else if (menu) present_menu();
+        else if (menu) {
+            if (!mute_music) graphics.play(intro);
+            present_menu();
+        }
 
         SDL_PollEvent(&e);
         graphics.presentScene();

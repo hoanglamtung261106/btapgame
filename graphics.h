@@ -76,13 +76,14 @@ struct Graphics {
         SDL_RenderCopy(renderer, texture, NULL, &dest);
     }
 
-    void blitRect(SDL_Texture* texture, SDL_Rect* src, int x, int y) {
-        SDL_Rect dest;
-        dest.x = x;
-        dest.y = y;
-        dest.w = src->w;
-        dest.h = src->h;
-        SDL_RenderCopy(renderer, texture, src, &dest);
+    void drawSomething(int x, int y, int& t) {
+        SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
+        SDL_Rect filled_rect;
+        filled_rect.x = x;
+        filled_rect.y = y;
+        filled_rect.w = (t % 100 == 0) ? t / 100 : t / 100 + 1;
+        filled_rect.h = 20;
+        SDL_RenderFillRect(renderer, &filled_rect);
     }
 
     void quit() {

@@ -20,6 +20,9 @@ SDL_Texture* pause_button;
 SDL_Texture* mute_button;
 SDL_Texture* unmute_button;
 SDL_Texture* portal[10];
+SDL_Texture* round_shield1;
+SDL_Texture* round_shield2;
+SDL_Texture* shield_icon;
 
 SDL_Texture* font_play;
 SDL_Texture* font_resume;
@@ -37,20 +40,18 @@ SDL_Texture* font_replay2;
 
 SDL_Texture* font_music;
 SDL_Texture* font_sound;
-SDL_Texture* font_gm1;
-SDL_Texture* font_gm2;
 
 SDL_Texture* name;
 SDL_Texture* gift;
 
-Mix_Music* music1;
-Mix_Music* music2;
 Mix_Chunk* get_score;
 Mix_Chunk* game_over;
 Mix_Chunk* get_secret;
-Mix_Chunk* intro;
+Mix_Music* intro;
 Mix_Chunk* good;
 Mix_Chunk* bad;
+Mix_Chunk* shield;
+Mix_Chunk* off;
 
 bool menu = true, pause = false, play = false, settings = false;
 bool upside_down = false;
@@ -58,9 +59,9 @@ bool mini = false;
 bool quit = false;
 bool mute_music = false;
 bool mute_sound = false;
-bool state_music = 0;
 bool is_game_over = false;
-int mul_ten = 1, time_secret = -1;
+int mul_ten = 1, time_secret = -1, time_shield = -1;
+bool touch[2] = {false, false};
 
 SDL_Event e;
 int clip = 0;
@@ -80,14 +81,14 @@ void initialize() {
     graphics.init();
 
     fi >> highpoint;
-    music1 = graphics.loadMusic("music/glorious_morning.mp3");
-    music2 = graphics.loadMusic("music/glorious_morning_2.mp3");
     get_score = graphics.loadSound("music/get_score.mp3");
     game_over = graphics.loadSound("music/die.mp3");
     get_secret = graphics.loadSound("music/claw_grab_best.wav");
-    intro = graphics.loadSound("music/level_intro.wav");
+    intro = graphics.loadMusic("music/RunningAway.mp3");
     good = graphics.loadSound("music/claw_grab_good.wav");
     bad = graphics.loadSound("music/claw_grab_bad.wav");
+    shield = graphics.loadSound("music/shield.mp3");
+    off = graphics.loadSound("music/off.mp3");
 
     name = graphics.loadTexture("image/font/bird_dash.png");
 
@@ -107,8 +108,6 @@ void initialize() {
 
     font_music = graphics.loadTexture("image/font/music.png");
     font_sound = graphics.loadTexture("image/font/sound.png");
-    font_gm1 = graphics.loadTexture("image/font/gm1.png");
-    font_gm2 = graphics.loadTexture("image/font/gm2.png");
 
     bird1[0] = graphics.loadTexture("image/frame/frame-1.png");
     bird1[1] = graphics.loadTexture("image/frame/frame-2.png");
@@ -134,6 +133,9 @@ void initialize() {
     pause_button = graphics.loadTexture("image/button/pause_button.png");
     mute_button = graphics.loadTexture("image/button/mute.png");
     unmute_button = graphics.loadTexture("image/button/unmute.png");
+    round_shield1 = graphics.loadTexture("image/shield1.png");
+    round_shield2 = graphics.loadTexture("image/shield2.png");
+    shield_icon = graphics.loadTexture("image/shield_icon.png");
 
     score = graphics.loadTexture("image/font/score .png");
     highscore = graphics.loadTexture("image/font/high_score.png");
