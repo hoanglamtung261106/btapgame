@@ -37,12 +37,29 @@ Khi con chim vào cổng này, kể cả chim size thường hay mini, con chim 
 
 <h3>Âm thanh</h3>
 <ul>
- <li> <b> Nhạc nền: </b>: <b> Glorious morning </b> và <b>Glorious morning 2</b>. Người chơi có thể tùy chọn nhạc ở phần <b>Settings</b></li>, ấn vào "GL1" sẽ thành bài "GL2" và ngược lại.
- <li> Ở <b>Settings</b> có 2 buttons mute hoặc unmute cho cả music và sound. Người chơi ấn button đó sẽ chuyển sang trạng thái ngược lại</li>
+ <li> <b> Nhạc nền cho menu: </b> <b>Running Away</b>
+ <li> Ở <b>Settings</b> có 2 buttons mute hoặc unmute cho cả nhạc nền menu và sound effects. Người chơi ấn button đó sẽ chuyển sang trạng thái ngược lại</li>
+</ul>
+
+<h3>Cách tạm dừng game</h3>
+Người chơi có thể ấn phím ESC hoặc click chuột trái vào pause button, khi đó game sẽ tạm dừng
+
+<h3>Quà</h3>
+Có 4 quà hình giống nhau nhưng chức năng khác nhau<p align="center"><img src="https://github.com/hoanglamtung261106/btapgame/blob/main/image/gift.png"></p>
+<ul>
+ <li> <b>+5</b>: Có hiệu lực trong 30 giây. Khi đi qua mỗi pipe, điểm cộng thêm 5.</li>
+ <li> <b>Shield</b>: Có hiệu lực trong 30 giây. Shield sẽ kết thúc khi hết 30 giây hoặc chim va chạm với pipe.</li>
+ <li> <b>+10đ 1 lần:</b> Khi chim gặp quà này thì điểm sẽ cộng thêm 10.
+ <li> <b>-10đ 1 lần:</b> Khi chim gặp quà này thì điểm sẽ trừ đi 10. Nếu điểm âm thì set thành 0.
 </ul>
 
 <h3>Cách tính điểm</h3>
-Cách tính điểm rất đơn giản. Cứ đi qua 1 pipe, điểm sẽ cộng 1. Sẽ có hộp quà, nếu con chim reaches được hộp đó thì người chơi sẽ được cộng 10 điểm khi vượt qua 1 pipe. Chức năng cộng 10 điểm chỉ có tác dụng trong 20 giây.
+<ul>
+ <li>Bình thường, khi chim đi qua 1 pipe, điểm sẽ cộng thêm 1.</li>
+ <li>Khi quà <b>+5</b> có hiệu lực, điểm sẽ cộng thêm 5 khi chim đi qua mỗi pipe.</li>
+ <li>Khi chim ăn quà <b>+10đ 1 lần</b>, điểm sẽ cộng thêm 10.</li>
+ <li>Khi chim ăn quà <b>-10đ 1 lần</b>, điểm sẽ trừ đi 10. Nếu điểm âm thì set thành 0.</li>
+</ul>
 
 <h2>IV. Tài liệu tham khảo</h2>
 <ul>
@@ -50,7 +67,8 @@ Cách tính điểm rất đơn giản. Cứ đi qua 1 pipe, điểm sẽ cộng
  <li> Background thì nhờ Chat GPT vẽ</li>
  <li> Ảnh con chim và pipe được lấy từ <a href="https://opengameart.org/">Opengameart</a></li>
  <li> Các portals được lấy từ <a href="https://geometry-dash.fandom.com/wiki/Portals">GD wiki</a></li>
- <li> Các được lấy từ <a href="https://www.pngwing.com/en/free-png-zmfgs/download">PNGWING</a> và <a href="https://uxwing.com/pause-button-red-icon/">UXWING</a>
- <li> Nhạc nền được lấy từ <a href="https://www.youtube.com">Youtube</a> và tải file đuôi .mp3</li>
+ <li> Các ảnh khác được lấy từ <a href="https://www.pngwing.com/en/free-png-zmfgs/download">PNGWING</a>, <a href="https://uxwing.com/pause-button-red-icon/">UXWING</a> và <a href="https://vi.pngtree.com/">PNGTREE
+ <li> Nhạc nền menu được lấy từ <a href="https://github.com/chauttm/gameProject/blob/main/09_sound_and_music/assets/RunningAway.mp3">GITHUB tham khảo do cô Châu cung cấp</a>
+ <li> Sound effects được lấy từ <a href="https://dev.azure.com/">dev.azure.com</a> và <a href="https://www.101soundboards.com">101soundboards</a>
  <li> Font được gõ từ <a href="https://gdcolon.com/gdfont"> GD Font</a> rồi tải xuống thành file ảnh đuôi .png</li>
 </ul></h2>
