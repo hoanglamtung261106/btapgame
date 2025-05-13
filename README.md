@@ -40,7 +40,8 @@ Khi con chim vào cổng này, kể cả chim size thường hay mini, con chim 
 
 <h3>Âm thanh</h3>
 <ul>
- <li> <b> Nhạc nền cho menu: </b> <b>Running Away</b>
+ <li> <b> Nhạc nền cho menu và settings: </b> <b>Running Away</b>
+ <li> Trong lúc chơi, không có nhạc nên, chỉ có sound effects</li>
  <li> Ở <b>Settings</b> có 2 buttons mute hoặc unmute cho cả nhạc nền menu và sound effects. Người chơi ấn button đó sẽ chuyển sang trạng thái ngược lại</li>
 </ul>
 
