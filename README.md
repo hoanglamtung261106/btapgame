@@ -12,6 +12,7 @@
  II. Tổng quan về trò chơi "BIRD DASH"
 </h2>
 <ul>
+ <li><b>Video Demo Game:</b> <a href="https://www.youtube.com/watch?v=SjYX6dI5WYo">Click here</a>
  <li><b>Thể loại:</b> Vô hạn</li>
  <li><b>Ngôn ngữ lập trình ra game:</b> C++ kết hợp với SDL2</li>
  <li>Trò chơi có 2 mức độ: dễ và khó</li>
