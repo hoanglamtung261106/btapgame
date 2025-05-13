@@ -22,7 +22,7 @@
 
 <h2> III.Những điểm nổi bật trong game</h2>
 <h3>Mức độ dễ</h3>
-Mức độ này rất đơn giản. Chim đi qua mỗi pipe thì sẽ tăng 1 điểm.
+Mức độ này không có tính năng nổi bật. Và tất nhiên, chim đi qua mỗi pipe thì sẽ tăng 1 điểm.
 <h3>Những loại portal mà chim đi qua (chỉ có ở mức độ khó)</h3>
 <b>Có 5 loại cổng có trong game:</b>
 <ul>
