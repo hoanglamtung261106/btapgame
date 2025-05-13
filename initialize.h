@@ -37,6 +37,9 @@ SDL_Texture* font_quit2;
 SDL_Texture* font_settings2;
 SDL_Texture* font_menu2;
 SDL_Texture* font_replay2;
+SDL_Texture* font_level;
+SDL_Texture* font_easy;
+SDL_Texture* font_hard;
 
 SDL_Texture* font_music;
 SDL_Texture* font_sound;
@@ -62,6 +65,7 @@ bool mute_sound = false;
 bool is_game_over = false;
 int mul_ten = 1, time_secret = -1, time_shield = -1;
 bool touch[2] = {false, false};
+bool hardgame = false;
 
 SDL_Event e;
 int clip = 0;
@@ -105,6 +109,10 @@ void initialize() {
     font_settings2 = graphics.loadTexture("image/font/settings2.png");
     font_menu2 = graphics.loadTexture("image/font/menu2.png");
     font_replay2 = graphics.loadTexture("image/font/replay2.png");
+
+    font_level = graphics.loadTexture("image/font/level.png");
+    font_easy = graphics.loadTexture("image/font/easy.png");
+    font_hard = graphics.loadTexture("image/font/hard.png");
 
     font_music = graphics.loadTexture("image/font/music.png");
     font_sound = graphics.loadTexture("image/font/sound.png");

@@ -18,8 +18,8 @@ void start_to_game() {
     Mix_HaltMusic();
     y = 150;
     upside_down = mini = false;
-    for (int i = 0; i < 2; i++) pipes[i] = rand() % (SCREEN_HEIGHT - 200) + 200;
-    for (int i = 0; i < 2; i++) state_portal[i] = rand() % 5;
+    for (int i = 0; i < 2; i++) pipes[i] = rand() % (SCREEN_HEIGHT - 200) / 40 * 40 + 200;
+    for (int i = 0; i < 2; i++) state_portal[i] = 10;
     pipe_x = 1200;
     point = 0;
     mul_ten = 1;
@@ -88,7 +88,8 @@ void gen_pipe() {
         pipes.push_back(rand() % (SCREEN_HEIGHT - 200) / 40 * 40 + 200);
 
         state_portal.erase(state_portal.begin());
-        state_portal.push_back(rand() % 20);
+        if (hardgame) state_portal.push_back(rand() % 20);
+        else state_portal.push_back(10);
         pipe_x += 600;
         touch[0] = touch[1] = false;
     }
@@ -106,7 +107,7 @@ void present_score() {
             else if (state_portal[0] == 8) graphics.play(shield);
             else graphics.play(get_score);
         }
-        if (state_portal[0] != 6 && state_portal[0] != 7) point += mul_ten;
+        if (state_portal[0] != 6 && state_portal[0] != 7 && !touch[0]) point += mul_ten;
     }
 
     pipe_x -= 5;
@@ -200,7 +201,24 @@ void present_settings() {
     graphics.renderTexture(background, 0, 0);
     graphics.renderTexture(font_music, 25, 25);
     graphics.renderTexture(font_sound, 25, 125);
+    graphics.renderTexture(font_level, 25, 225);
     graphics.renderTexture(button, 264, 370);
+
+    for (int i = 350; i <= 370; i++) {
+        for (int j = 235; j <= 275; j++) {
+            if (j <= 255 && i + j >= 605 || j >= 255 && j <= i - 95) graphics.drawPoint(i, j);
+        }
+    }
+
+    for (int i = 625; i <= 645; i++) {
+        for (int j = 235; j <= 275; j++) {
+            if (j <= 255 && j >= i - 390 || j >= 255 && i + j <= 900) graphics.drawPoint(i, j);
+        }
+    }
+
+    if (!hardgame) graphics.renderTexture(font_easy, 400, 225);
+    else graphics.renderTexture(font_hard, 390, 225);
+
 
     if (!mute_music) graphics.renderTexture(unmute_button, 400, 25);
     else graphics.renderTexture(mute_button, 400, 25);
@@ -210,6 +228,11 @@ void present_settings() {
 
     int mx, my;
     SDL_GetMouseState(&mx, &my);
+
+    if (my >= 235 && my <= 275) {
+        if (mx >= 350 && mx <= 370 && (my <= 255 && mx + my >= 605 || my >= 255 && my <= mx - 95) && SDL_MOUSEBUTTONDOWN == e.type) hardgame ^= 1;
+        else if (mx >= 625 && mx <= 645 && (my <= 255 && my >= mx - 390 || my >= 255 && mx + my <= 900) && SDL_MOUSEBUTTONDOWN == e.type) hardgame ^= 1;
+    }
 
     if (mx >= 290 && mx <= 480 && my >= 396 && my <= 446) graphics.renderTexture(font_menu2, 332, 406);
     else graphics.renderTexture(font_menu, 332, 406);

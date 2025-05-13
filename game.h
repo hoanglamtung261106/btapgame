@@ -8,27 +8,30 @@
 #include "present.h"
 
 void change_bird() {
-    if (pipe_x == 800 && state_portal[0] == 0) upside_down ^= 1;
-    else if (pipe_x == 800 && state_portal[0] == 1) upside_down = true;
-    else if (pipe_x == 800 && state_portal[0] == 2) upside_down = false;
-    else if (pipe_x - 600 == 150 && state_portal[0] == 3 && !mini) {
+    if (pipe_x == 800 && state_portal[0] == 0 && !touch[0]) upside_down ^= 1;
+    else if (pipe_x == 800 && state_portal[0] == 1 && !touch[0]) upside_down = true;
+    else if (pipe_x == 800 && state_portal[0] == 2 && !touch[0]) upside_down = false;
+    else if (pipe_x - 600 == 150 && state_portal[0] == 3 && !mini && !touch[0]) {
         mini = true;
         if (!upside_down && y % 20 != 0) y += 10;
+        else if (!upside_down) y += 20;
         else if (upside_down && y % 20 != 0) y -= 10;
+        else if (upside_down) y -= 20;
     }
-    else if (pipe_x - 600 == 195 && state_portal[0] == 4 && mini) {
+    else if (pipe_x - 600 == 195 && state_portal[0] == 4 && mini && !touch[0]) {
         mini = false;
         if (!upside_down) {
-            if (y + 40 == pipes[0]) y -= 20;
-            else if (y - 10 >= pipes[0] - 200) y -= 10;
+            if (y + 40 == pipes[0]) y -= 40;
+            else if (y == pipes[0] - 200) y = y;
+            else if (y - 10 >= pipes[0] - 200) y -= 20;
         }
         else if (upside_down) {
             if (y == pipes[0] - 200) y = y;
-            else if (y + 40 == pipes[0]) y -= 20;
-            else y -= 10;
+            else if (y + 40 == pipes[0]) y -= 40;
+            else y -= 20;
         }
     }
-    else if (state_portal[0] == 5) {
+    else if (state_portal[0] == 5 && !touch[0]) {
         if (!mini) {
             if (pipe_x - 600 == 240 && y >= pipes[0] - 200 && y + 80 <= pipes[0]) mul_ten = 5, time_secret = 30000;
         }
@@ -37,7 +40,7 @@ void change_bird() {
         }
     }
 
-    else if (state_portal[0] == 6) {
+    else if (state_portal[0] == 6 && !touch[0]) {
         if (!mini) {
             if (pipe_x - 600 == 240 && y >= pipes[0] - 200 && y + 80 <= pipes[0]) point = max(point - 10, 0);
         }
@@ -46,7 +49,7 @@ void change_bird() {
         }
     }
 
-    else if (state_portal[0] == 7) {
+    else if (state_portal[0] == 7 && !touch[0]) {
         if (!mini) {
             if (pipe_x - 600 == 240 && y >= pipes[0] - 200 && y + 80 <= pipes[0]) point += 10;
         }
@@ -55,7 +58,7 @@ void change_bird() {
         }
     }
 
-    else if (state_portal[0] == 8) {
+    else if (state_portal[0] == 8 && !touch[0]) {
         if (!mini) {
             if (pipe_x - 600 == 240 && y >= pipes[0] - 200 && y + 80 <= pipes[0]) time_shield = 30000;
         }

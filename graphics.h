@@ -76,6 +76,11 @@ struct Graphics {
         SDL_RenderCopy(renderer, texture, NULL, &dest);
     }
 
+    void drawPoint(int& x, int& y) {
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);   // white
+        SDL_RenderDrawPoint(renderer, x, y);
+    }
+
     void drawSomething(int x, int y, int& t) {
         SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
         SDL_Rect filled_rect;
