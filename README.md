@@ -14,13 +14,16 @@
 <ul>
  <li><b>Thể loại:</b> Vô hạn</li>
  <li><b>Ngôn ngữ lập trình ra game:</b> C++ kết hợp với SDL2</li>
+ <li>Trò chơi có 2 mức độ: dễ và khó</li>
  <li><b>Font:</b> font của Geometry Dash
  <li><b>Nhân vật:</b> <p align="center"><img src="https://github.com/hoanglamtung261106/btapgame/blob/main/image/frame/frame-1.png" width=100></p>
  <li><b>Tóm tắt:</b> Người chơi sẽ phải điều khiển nhân vật sao cho nhân vật không được chạm vào bề dọc của ống (chạm bề ngang thì không bị thua). Điều khiển bằng keyboard UP, nếu càng giữ chim càng bay (giống như gamemode ship hoặc wave của Geometry Dash)</li>
 </ul>
 
 <h2> III.Những điểm nổi bật trong game</h2>
-<h3>Những loại portal mà chim đi qua</h3>
+<h3>Mức độ dễ</h3>
+Mức độ này rất đơn giản. Chim đi qua mỗi pipe thì sẽ tăng 1 điểm.
+<h3>Những loại portal mà chim đi qua (chỉ có ở mức độ khó)</h3>
 <b>Có 5 loại cổng có trong game:</b>
 <ul>
 <li> <b>Gravity up portal</b><p align="center"><img src="https://github.com/hoanglamtung261106/btapgame/blob/main/image/portal/up_portal.png" width=100> </p>
@@ -44,7 +47,7 @@ Khi con chim vào cổng này, kể cả chim size thường hay mini, con chim 
 <h3>Cách tạm dừng game</h3>
 Người chơi có thể ấn phím ESC hoặc click chuột trái vào pause button, khi đó game sẽ tạm dừng
 
-<h3>Quà</h3>
+<h3>Quà (chỉ có trong mức độ khó)</h3>
 Có 4 quà hình giống nhau nhưng chức năng khác nhau<p align="center"><img src="https://github.com/hoanglamtung261106/btapgame/blob/main/image/gift.png"></p>
 <ul>
  <li> <b>+5</b>: Có hiệu lực trong 30 giây. Khi đi qua mỗi pipe, điểm cộng thêm 5.</li>
@@ -53,7 +56,7 @@ Có 4 quà hình giống nhau nhưng chức năng khác nhau<p align="center"><i
  <li> <b>-10đ 1 lần:</b> Khi chim gặp quà này thì điểm sẽ trừ đi 10. Nếu điểm âm thì set thành 0.
 </ul>
 
-<h3>Cách tính điểm</h3>
+<h3>Cách tính điểm (chỉ nói đến ở mức độ khó)</h3>
 <ul>
  <li>Bình thường, khi chim đi qua 1 pipe, điểm sẽ cộng thêm 1.</li>
  <li>Khi quà <b>+5</b> có hiệu lực, điểm sẽ cộng thêm 5 khi chim đi qua mỗi pipe.</li>
