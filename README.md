@@ -16,7 +16,6 @@
  <li><b>Thể loại:</b> Vô hạn</li>
  <li><b>Ngôn ngữ lập trình ra game:</b> C++ kết hợp với SDL2</li>
  <li>Trò chơi có 2 mức độ: dễ và khó</li>
- <li><b>Font:</b> font của Geometry Dash
  <li><b>Nhân vật:</b> <p align="center"><img src="https://github.com/hoanglamtung261106/btapgame/blob/main/image/frame/frame-1.png" width=100></p>
  <li><b>Tóm tắt:</b> Người chơi sẽ phải điều khiển nhân vật sao cho nhân vật không được chạm vào bề dọc của ống (chạm bề ngang thì không bị thua). Điều khiển bằng keyboard UP, nếu càng giữ chim càng bay (giống như gamemode ship hoặc wave của Geometry Dash)</li>
 </ul>
