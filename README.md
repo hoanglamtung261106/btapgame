@@ -67,7 +67,7 @@ Có 4 quà hình giống nhau nhưng chức năng khác nhau<p align="center"><i
 
 <h2>IV. Tài liệu tham khảo</h2>
 <ul>
- <li> Code mẫu tham khảo trên <a href="https://lazyfoo.net/tutorials/SDL/index.php"> Lazy Foo</a> và <a href="https://github.com/chauttm/advprogram/tree/master"> Code mẫu do giảng viên cung cấp</a></li>
+ <li> Code mẫu tham khảo trên <a href="https://wiki.libsdl.org/SDL2/FrontPage"> SDL2 Wiki</a> và <a href="https://github.com/chauttm/advprogram/tree/master"> Code mẫu do giảng viên cung cấp</a></li>
  <li> Background thì nhờ Chat GPT vẽ</li>
  <li> Ảnh con chim và pipe được lấy từ <a href="https://opengameart.org/">Opengameart</a></li>
  <li> Các portals được lấy từ <a href="https://geometry-dash.fandom.com/wiki/Portals">GD wiki</a></li>
